@@ -6,7 +6,11 @@ const file = prod ? 'input' + problem : 'sample' + problem;
 
 function toBin(dec) {
     let val = (dec >>> 0).toString(2);
-    return str.padStart(36, "0");
+    return val.padStart(36, "0");
+}
+
+function toDec(bin) {
+    return parseInt(bin, 2);
 }
 
 function f() {
@@ -29,29 +33,41 @@ function f() {
         }
 
         let [mem, val] = line.split('=');
-        //let address = ''
-        //for (let i = 4; mem[i] != ']'; i++) address += mem[i];
-        //address = Number(address);
+        let address = ''
+        for (let i = 4; mem[i] != ']'; i++) address += mem[i];
+        address = Number(address);
 
         let value = Number(val);
+        
+        let bit = JSON.parse(JSON.stringify(toBin(value)));
+
+        let array = bit.split('');
 
         for (let i = 0; i < bits; i++) {
-            let index = bits - i - 1;
-            if (mask[index] == '0') {
-                let bit = ~(1 << i) & width; 
-                value = value & bit;
-            } else if (mask[index] == '1') {
-                value = value | (1 << i);
-            }
-
-            if (value < 0) {
-                console.log(mem, val, value);
-                console.log(dec2bin(width));
-                console.log(dec2bin(mask));
+            if (mask[i] == '0') {
+                //let bit = ~(1 << i) & width; 
+                //value = value & bit;
+                array[i] = '0';
+            } else if (mask[i] == '1') {
+                //value = value | (1 << i);
+                array[i] = '1';
             }
         }
+
+        let final = array.join('');
+
+        let result = toDec(final);
+
+        //if (result < 0) {
+          //  console.log("Negative " + val);
+        //}
+        console.log(mem, val);
+        console.log("value:  ", toBin(value));
+        console.log("mask:   ", mask);
+        console.log("result: ", final);
+        console.log(result);
         
-        memory[mem] = value;
+        memory[mem] = result;
     }
 
     let sum = 0;
