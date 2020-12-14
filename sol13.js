@@ -1,6 +1,4 @@
 var fs = require('fs');
-const { basename } = require('path');
-const { start } = require('repl');
 
 const problem = 13;
 const prod = true;
