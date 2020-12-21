@@ -65,9 +65,7 @@ function f() {
     let total = Object.keys(bitmaps).length;
     console.log("Tiles: ", total);
 
-    let segments = {
-
-    }
+    let segments = {}
     for (let b in bitmaps) {
         let bb = bitmaps[b];
         let row0 = bb[0].join('');
@@ -109,8 +107,56 @@ function f() {
     }
     console.log("Precompute done");
 
+    let start;
+    for (let b in segments) {
+        let unique = 0;
+        let valid = {};
+        for (let i in segments[b]) {
+            let c = edge_candidates[segments[b][i]];
+            if (c.length == 1) {
+                unique++;
+                valid[i] = true;
+            }
+        }
+        if (unique == 4) {
+            if (valid['S'] && valid['E']) {
+                start = b;
+            }
+        }
+    }
+    
+    let boardN = Math.sqrt(total);
+    console.log(boardN);
 
-//    let product = 1;
+    let board = [];
+    for (let x = 0; x < boardN; x++) {
+        board.push([]);
+    }
+
+    board[0][0] = { id: start, rotation: 0, flipX: false, flipY: false};
+
+    let used_tiles = {};
+    used_tiles[start] = true;
+
+    for (let x = 0; x < boardN; x++) {
+        for (let y = 0; y < boardN; y++) {
+            if (board[x][y]) continue;
+
+            //if (y > 0) 
+
+        }
+    }
+
+
+
+
+}
+
+f();
+
+
+/**
+ * //    let product = 1;
 let edges = 0;
 let corners = 0;
     for (let b in segments) {
@@ -174,9 +220,9 @@ let corners = 0;
                 if (aa[a_check] != bb[b_check]) {
                     return false;
                 }
-                /*if (a.edge(i[1]) != b.edge(i[3])) {
+                if (a.edge(i[1]) != b.edge(i[3])) {
                     return false;
-                }*/
+                }
             }
         }
         return true;
@@ -186,9 +232,9 @@ let corners = 0;
 
     /*let create_tile = (t) => {
         return new Tile(t, segments[t].N, segments[t].S, segments[t].E, segments[t].W)
-    }*/
+    }
 
-/*    let n = 0;
+    let n = 0;
 
     let search_faster = (board, unused, solution) => {
         n++;
@@ -275,6 +321,3 @@ if (validate(board, next)) {
         console.log(product);
         process.exit();
     })*/
-}
-
-f();
