@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 const DEBUG = false;
-const NUMBER = $NUMBER;
+const NUMBER = 13;
 const FILE = DEBUG ? './sample' + NUMBER : './input' + NUMBER;
 
 function run() {
