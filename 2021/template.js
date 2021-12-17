@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-const DEBUG = false;
+const DEBUG = true;
 const NUMBER = $NUMBER;
 const FILE = DEBUG ? './sample' + NUMBER : './input' + NUMBER;
 
