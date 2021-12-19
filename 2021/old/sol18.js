@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-const DEBUG = false;
+const DEBUG = true;
 const NUMBER = 18;
 const FILE = DEBUG ? './sample' + NUMBER : './input' + NUMBER;
 
@@ -243,15 +243,33 @@ function run() {
 }
 
 function test() {
-  let a = to_tree(JSON.parse('10'));
-  console.log(find_split(a, a));
+  let data = readFileFlat(FILE);
+  let a = to_tree(JSON.parse(data[0]));
+  
+  let step = () => {
+    if (find_explode(a, a)) {
+      console.log("after_explode", print_tree(a));
+      return 'explode';
+    }
+    if (find_split(a, a)) {
+      console.log("after_split", print_tree(a));
+      return 'split';
+    }
+    return 'done';
+  }
+
+  let reduction = step();
+  while (reduction != 'done') {
+    reduction = step();
+  }
+
   console.log(print_tree(a));
 }
-//test();
+test();
 
 function readFileFlat(file) {
   let data = fs.readFileSync(file).toString();
   return data.split('\r\n');
 }
 
-run();
+//run();
