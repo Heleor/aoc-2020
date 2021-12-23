@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "immutable": "^4.0.0",
     "three": "^0.135.0"
   }
 }
